@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table, th, td {border: 1px solid;}
+    </style>
+    <title>Django Tablet Tracker</title>
+</head>
+<body>
+    <h1>Patient Name : Shashikala</h1>
+    <h2>Time: {{ time }}</h2>
+    <table>
+        <tr>
+            <th>Prescription Name</th>
+            <th>Status</th>
+        </tr>
+        {% for item in tablets %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
