@@ -1,13 +1,14 @@
 from django.shortcuts import render
-
+from .models import Tablet
 
 # Create your views here.
 
 def index(request):
     context = {
-    'time': get_time(),
-    'tablets' : [{'name': 'one', 'status': 'No'}, {'name': 'two', 'status': 'No'}, {'name': 'three', 'status': 'No'}]
+            'time': get_time(),
+            'tablets' : Tablet.objects.all()
             }
+    
     return render(request, 'Tracker/index.html', context=context)
 
 def get_time():
