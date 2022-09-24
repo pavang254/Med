@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/med.css' %}">
+    <title>Prescription Tracker</title>
+</head>
+<body class="bg-white">
+    <!-- Navbar -->
+    <nav>
+        <div class="flex justify-around items-center p-2 bg-slate-200 drop-shadow-md">
+            <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/128/000000/external-pill-medical-kiranshastry-lineal-color-kiranshastry.png" alt="logo" class="max-h-[48px] w-auto"/>
+            <h1 class="text-3xl font-bold align-middle">Prescription</h1>
+        </div>
+    </nav>
+    <header class="bg-slate-100 mb-2 rounded-lg drop-shadow-md">
+        <div class="justify-center text-center p-1">
+            <h1 class="text-2xl font-bold drop-shadow-md">Shashikala</h1>
+        </div>
+        <div class="flex text-sm justify-between p-2 items-center mx-2">
+            <p>Time: <span class="font-bold text-xl">{{ time|capfirst }}</span></p>
+            <p class="font-bold">{{ date|date:"g.i A - l"}}</p>
+        </div>
+    </header>
+    <main>
+        <div class="space-y-2">
+            {% for tab in tablets %}
+            <div class="flex justify-around p-2 bg-emerald-300 rounded-xl drop-shadow-md border-b-2" id="{{ tab.id }}">
+                <div class="flex gap-2">
+                    <img src="https://img.icons8.com/fluency/32/000000/pill.png" alt="pill" class=""/>
+                    <h1 class="text-xl font-bold">{{ tab.name }} <span class="text-sm font-normal">{{tab.strength}}mg</span></h1>
+                </div>
+                <div>
+                    <button id="btn" data-id="{{ tab.id }}">
+                        <img src="https://img.icons8.com/color/32/000000/plus--v1.png" alt="plus" class="p-2"/>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        <div>
+            <a href="{% url 'create' %}" class="mx-4 my-4 flex text-xl font-semibold text-gray-600 underline">Add New Prescription</a>
+            <a href="{% url 'edit' %}" class="mx-4 my-4 flex text-xl font-semibold text-gray-600 underline">Edit Prescription</a>
+        </div>
+        <div class="text-center">
+            <p>Prescribed by: <span class="font-bold mb-2">Dr. Praveen</span></p>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/714392a810.js" crossorigin="anonymous"></script>
+    <script>
+        let btn = document.querySelectorAll('button');
+        for(let i=0; i<btn.length; i++){
+            btn[i].addEventListener('click', function(){
+            let tab = this.dataset.id;
+                document.getElementById(`${tab}`).style.backgroundColor = "#e63946";
+            })} 
+    </script>
+</body>
+</html>

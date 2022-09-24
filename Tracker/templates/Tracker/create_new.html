@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/new.css' %}">
+  <title>Create New Prescription</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <a href="{% url 'base' %}">
+    <nav>
+        <div class="flex justify-evenly p-2 bg-slate-300 drop-shadow-md mt-2">
+            <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/128/000000/external-pill-medical-kiranshastry-lineal-color-kiranshastry.png" alt="logo" class="max-h-[48px] w-auto align-middle"/>
+            <h1 class="text-2xl font-bold align-middle">Add Prescription</h1>
+        </div>
+    </nav>
+    </a>
+    <div class="justify-center text-center p-1">
+        <h1 class="text-2xl font-bold drop-shadow-md">Shashikala</h1>
+    </div>
+    <div class="m-1 mb-4 p-2 bg-slate-300 rounded-md drop-shadow-md border-b-2 border-black">
+        <form id="form" action="" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <div>
+                    <label for="name">Prescription Name :</label>
+                    <input type="text" name="name" id="name" class="bg-gray-200 p-2 text-lg w-[150px] mb-2 border-2 rounded-md border-b-black">
+                </div>
+                <div>
+                    <label for="strength" class="text-lg">Strength:</label>
+                    <input type="text" name="strength" id="strength" class="bg-slate-200 p-1 w-12 rounded-md border-2 text-black text-center border-b-black"> mg
+                </div>
+                <div class="flex justify-between font-bold text-lg mt-4">
+                    <div>
+                        <input type="checkbox" name="timings" value="morning">
+                        <label> Morning</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="timings" value="afternoon">
+                        <label> Afternoon</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="timings" value="night">
+                        <label> Night</label>
+                    </div>
+                </div>
+                <button type="submit" class="bg-red-400 text-lg p-2 px-4 mt-4 rounded-md font-bold" id="confirm">Add New</button>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

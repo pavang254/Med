@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/edit.css' %}">
+    <title>Edit Prescription</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="flex justify-evenly p-2 bg-slate-300 drop-shadow-md mt-2">
+            <a href="{% url 'base' %}">
+                <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/128/000000/external-pill-medical-kiranshastry-lineal-color-kiranshastry.png" alt="logo" class="max-h-[48px] w-auto align-middle"/>
+            </a>
+            <h1 class="text-2xl font-bold align-middle">Change Prescription</h1>
+        </div>
+    </nav>
+    <main>
+        <div class="justify-center text-center p-1">
+            <h1 class="text-2xl font-bold drop-shadow-md my-2">Shashikala</h1>
+        </div>
+        <section>
+            {% for tablet in tablets %}
+            <div class="flex justify-around bg-gray-200 rounded-xl drop-shadow-md border-b-2">
+                <div class="flex gap-2 p-2">
+                    <img src="https://img.icons8.com/fluency/32/000000/pill.png" alt="pill" class=""/>
+                    <h1 class="text-2xl font-bold">{{tablet.name}} <span class="text-sm font-normal">500mg</span></h1>
+                </div>
+                <div>
+                    <button id="btn">
+                        <img src="https://img.icons8.com/officel/26/000000/edit.png" class="pt-3" alt="edit"/>
+                    </button>
+                </div>
+            </div>
+            <div class="m-1 mb-4 p-2 bg-slate-300 rounded-md drop-shadow-md border-b-2 border-black">
+                <form id="form" data-tablet="{{tablet.id}}">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div>
+                            <label for="strength" class="text-lg">Strength:</label>
+                            <input type="text" name="strength" id="strength" class="bg-slate-200 p-1 w-12 border-2 text-black text-center border-b-black"> mg
+                        </div>
+                        <div class="flex justify-between font-bold text-lg mt-4">
+                            <div>
+                                <input type="checkbox" name="time-{{tablet.id}}" value="morning">
+                                <label> Morning</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="time-{{tablet.id}}" value="afternoon">
+                                <label> Afternoon</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="time-{{tablet.id}}" value="night">
+                                <label> Night</label>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center ">
+                            <button type="submit" class="bg-red-400 text-lg p-2 px-4 mt-4 rounded-md font-bold" id="confirm">Confirm changes</button>
+                            <a href="#" class="pr-2 delete" data-id="{{tablet.id}}"><i class="fa-regular fa-x text-2xl text-red-700 font-bold place-self-center pt-2"></i></a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+    <div class="flex float-right m-2 mt-4">
+        <button class="p-2 bg-cyan-400 text-sm rounded-md drop-shadow-md font-gray-500">Delete Prescription</button>
+    </div>
+    <script src="https://kit.fontawesome.com/714392a810.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    </script>
+    <script>
+        var form = document.querySelectorAll('form');
+        var timings = [];
+        var del = document.getElementsByClassName('delete');
+
+        // edit function
+
+        for(var x=0; x<form.length; x++){
+            form[x].addEventListener('submit', function(e){
+                e.preventDefault();
+                var id = this.dataset.tablet
+                var checkBox = document.getElementsByName(`time-${id}`);
+                for(var i=0; i<checkBox.length; i++ ){
+                    if (checkBox[i].checked == true){
+                     timings.push(checkBox[i].value);
+                    }
+            }
+            var tabDetails = {
+				'id':parseInt(this.dataset.tablet),
+				'strength':parseInt(this.strength.value),
+				'timing':timings,
+			}
+
+            console.log(tabDetails);
+            var url = 'http://127.0.0.1:8000/edit-Tablet/';
+            fetch(url,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'X-CSRFToken':csrftoken,
+                },
+                body:JSON.stringify({'form':tabDetails}),
+            })
+            .then((response)=>response.json())
+            .then((data)=>{
+                if (data.message === 'success'){
+                window.location.href = '/'
+                }
+            })
+        })
+        }
+
+        // delete function
+
+        for(var z=0; z<del.length; z++){
+            del[z].addEventListener('click', function(){
+                var id = this.dataset.id;
+                var tabDetails = {'id':parseInt(id),}
+
+                var url = 'http://127.0.0.1:8000/delete-Tablet/';
+                fetch(url,{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'X-CSRFToken':csrftoken,
+                    },
+                    body:JSON.stringify({'info':tabDetails}),
+                })
+                .then((response)=>response.json())
+                .then((data)=>{
+                    if (data.message === 'success'){
+                    window.location.href = '/'
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+</html>
