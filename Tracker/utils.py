@@ -3,7 +3,7 @@ def get_time():
     time = datetime.now().hour
     if time < 12:
         return "morning"
-    elif time < 16:
+    elif time < 17:
         return "afternoon"
     else:
         return "night"

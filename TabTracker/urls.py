@@ -19,5 +19,6 @@ from Tracker import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('Tracker.urls'))
+    path('', include('Tracker.urls')),
+    path('api/',include('Tracker.api.urls')),
 ]

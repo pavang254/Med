@@ -37,6 +37,3 @@ class Tablet(models.Model):
     def __str__(self) -> str:
         return self.name
 
-class Record(models.Model):
-
-    date = models.DateTimeField(auto_now_add=True)
