@@ -7,8 +7,6 @@
 *.sql.gz
 .cache
 .project
-.venv
-.env
 .idea
 .pydevproject
 .idea/workspace.xml
@@ -30,3 +28,13 @@ stats
 Dockerfile*
 docker-compose*
 .dockerignore
+
+
+.docker
+*/__pycache__/
+**/__pycache__/
+
+.env/
+.venv/
+venv/
+.env

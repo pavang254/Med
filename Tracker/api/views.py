@@ -7,7 +7,6 @@ from Tracker.utils import get_time
 
 class TabletView(ListAPIView, CreateAPIView):
     queryset=Tablet.objects.filter(timings__contains=[get_time()])
-    # queryset=Tablet.objects.all()
     serializer_class = TabletSerializer
 
 class TabletListView(ListAPIView):
