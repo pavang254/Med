@@ -19,7 +19,7 @@ import useFetch from '../hooks/useFetch';
 
 
 const Edit = () => {
-  const {data} = useFetch('http://localhost:8000/api/tablets/all/');
+  const {data} = useFetch('http://localhost:8080/api/tablets/all/');
   const [strength, setStrength] = useState(null)
   const [timing, setTiming] = useState([])
 
@@ -42,7 +42,7 @@ const Edit = () => {
       'strength':strength? parseInt(strength): 0,
       'timings':timing,
     }
-    var url = `http://localhost:8000/api/tablets/update/${tabDetails.id}/`;
+    var url = `http://localhost:8080/api/tablets/update/${tabDetails.id}/`;
     console.log('tablet update:', tabDetails)
     fetch(url,{
       method:'PATCH',
@@ -60,7 +60,7 @@ const Edit = () => {
   const handleDelete = (e)=>{
     e.preventDefault();
     var id=parseInt(e.target.dataset.id);
-    var url = `http://localhost:8000/api/tablets/update/${id}/`;
+    var url = `http://localhost:8080/api/tablets/update/${id}/`;
 
     fetch(url,
       {

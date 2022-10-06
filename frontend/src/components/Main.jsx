@@ -12,7 +12,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import Time from "../utils/Time";
 
 const Main = () => {
-  const url = "http://localhost:8000/api/tablets/";
+  const url = "http://localhost:8080/api/tablets/";
   const { timing, date } = Time();
   const [data, setData] = useState([]);
   const [err, setErr] = useState(null);

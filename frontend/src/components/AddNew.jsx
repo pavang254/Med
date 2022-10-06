@@ -23,7 +23,7 @@ const AddNew = () => {
       timings: timing,
     };
 
-    fetch("http://localhost:8000/api/tablets/", {
+    fetch("http://localhost:8080/api/tablets/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
